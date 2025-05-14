@@ -1,18 +1,13 @@
+import { Link, NavLink } from 'react-router-dom';
 import { Menubar, MenubarContent, MenubarItem, MenubarMenu } from '../components/ui/menubar';
 
 export function Header() {
   return (
-    <div className="flex  items-center p-4 gap-4">
-        <button>Login</button>
-        <button>Register</button>
-        {/* <Menubar>
-            <MenubarMenu className="gap-4 p-3">
-                Login
-            </MenubarMenu>
-            <MenubarMenu>
-                Sign up
-            </MenubarMenu>
-        </Menubar> */}
+    <div className="flex text-3xl text-center mt-50 p-4 gap-4">
+        <NavLink to="/" >Home</NavLink>
+        <Link to="/login">Login</Link>
+        <Link to="/register">Register</Link>
+        
     </div>
   )
 }
