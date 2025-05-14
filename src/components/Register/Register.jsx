@@ -4,14 +4,22 @@ import auth from '../../firebase/firebase.config';
 
 const Register = () => {
   const[registerError, setRegisterError]=useState('');
+  const [success,setSuccess]= useState('');
   const handleRegister= (e)=>{
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
     console.log(email,password);
+    if(password.length<6){
+      setRegisterError("Password should be at least 6 characters or longer....");
+      return;
+    }
+    setRegisterError('');
+    setSuccess('');
     createUserWithEmailAndPassword(auth,email, password)
     .then(result =>{
       console.log(result.user);
+      setSuccess('User Created Successfully...')
     })
     .catch((error) => {
       console.log(error)
@@ -38,6 +46,12 @@ const Register = () => {
                   
                     <button className="btn btn-neutral mt-4" type='submit'>Register</button>
                   </form>
+                  {
+                    registerError && <p className='text-red-400'>{registerError}</p>
+                  }
+                  {
+                    success && <p className='text-green-400'>{success}</p>
+                  }
                 </div>
               </div>
             </div>
