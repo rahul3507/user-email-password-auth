@@ -1,10 +1,12 @@
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import React, { useState } from 'react'
 import auth from '../../firebase/firebase.config';
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const Register = () => {
   const[registerError, setRegisterError]=useState('');
   const [success,setSuccess]= useState('');
+  const[showPassword, setShowPassword]= useState(false);
   const handleRegister= (e)=>{
     e.preventDefault();
     const email = e.target.email.value;
@@ -12,6 +14,10 @@ const Register = () => {
     console.log(email,password);
     if(password.length<6){
       setRegisterError("Password should be at least 6 characters or longer....");
+      return;
+    }
+    else if(!/[A-Z]/.test(password)){
+      setRegisterError('Your password should have at least one Upper Case...');
       return;
     }
     setRegisterError('');
@@ -42,8 +48,22 @@ const Register = () => {
                     <label className="label">Email</label>
                     <input className='p-2 ' type="email" name='email' id='' />
                     <label className="label">Password</label>
-                    <input className='p-2' type="password" name='password' id='' />
-                  
+                    <div className='relative border justify-center'>
+                      <input 
+                            className='w-full p-2' 
+                            type={showPassword? "text":"password" }
+                            name='password'
+                            id='' 
+                            />
+                    <span 
+                        onClick={()=>setShowPassword(!showPassword)}
+                        className='cursor-pointer absolute top-3 right-4 '
+                        >
+                          {
+                            showPassword ? <FaEyeSlash/>:<FaEye /> 
+                          }
+                        </span>
+                    </div>
                     <button className="btn btn-neutral mt-4" type='submit'>Register</button>
                   </form>
                   {
