@@ -11,13 +11,18 @@ const Register = () => {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
-    console.log(email,password);
+    const accepted = e.target.terms.checked
+    console.log(email,password, accepted);
     if(password.length<6){
       setRegisterError("Password should be at least 6 characters or longer....");
       return;
     }
     else if(!/[A-Z]/.test(password)){
       setRegisterError('Your password should have at least one Upper Case...');
+      return;
+    }
+    else if(!accepted){
+      setRegisterError("Please accept our terms and conditions")
       return;
     }
     setRegisterError('');
@@ -64,6 +69,12 @@ const Register = () => {
                           }
                         </span>
                     </div>
+                    <br />
+                    <div className='flex '>
+                      <input type="checkbox" name="terms" id="terms" />
+                      <label htmlFor='terms'>Accept our <a href='#'>Terms and Conditions</a></label>
+                    </div>
+                    <br />
                     <button className="btn btn-neutral mt-4" type='submit'>Register</button>
                   </form>
                   {
