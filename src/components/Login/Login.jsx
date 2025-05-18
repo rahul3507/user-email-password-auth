@@ -8,25 +8,30 @@ const Login = () => {
   const[registerError, setRegisterError]=useState('');
     const [success,setSuccess]= useState('');
     const[showPassword, setShowPassword]= useState(false);
-  const handleLogin= (e) =>{
-      e.preventDefault()
-      const  email = e.target.email.value;
-      const password =e.target.password.value;
-      console.log(email,password);
+    
+    const handleForgetPassword=(e)=>{
 
-      setRegisterError('');
-      setSuccess('');
+    }
 
-      signInWithEmailAndPassword(auth, email,password)
-            .then((result)=>{
-              console.log(result.user)
-              setSuccess('Sign in Successfully...')
-            })
-            .catch((error) => {
-                console.log(error)
-                setRegisterError(error.message);
-    });
-  }
+    const handleLogin= (e) =>{
+        e.preventDefault()
+        const  email = e.target.email.value;
+        const password =e.target.password.value;
+        console.log(email,password);
+
+        setRegisterError('');
+        setSuccess('');
+
+        signInWithEmailAndPassword(auth, email,password)
+              .then((result)=>{
+                console.log(result.user)
+                setSuccess('Sign in Successfully...')
+              })
+              .catch((error) => {
+                  console.log(error)
+                  setRegisterError(error.message);
+      });
+    }
   return (
     <div>
           <div className="hero bg-base-200 ">
@@ -60,7 +65,7 @@ const Login = () => {
                                                   }
                                             </span>
                     </div>
-                    <div><a className="link link-hover">Forgot password?</a></div>
+                    <div><a onClick={handleForgetPassword} className="link link-hover">Forgot password?</a></div>
                     <button className="btn btn-neutral mt-4">Login</button>
                   </form>
                    {
