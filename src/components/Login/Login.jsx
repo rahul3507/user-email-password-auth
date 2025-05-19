@@ -1,6 +1,6 @@
 import { signInWithEmailAndPassword} from 'firebase/auth';
 import auth from "../../firebase/firebase.config"
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
@@ -8,9 +8,17 @@ const Login = () => {
   const[registerError, setRegisterError]=useState('');
     const [success,setSuccess]= useState('');
     const[showPassword, setShowPassword]= useState(false);
-    
-    const handleForgetPassword=(e)=>{
 
+    const emailRef =useRef(null);
+    
+    const handleForgetPassword=()=>{
+      const email = emailRef.current.value;
+      if(!email){
+        console.log('send reset email', emailRef.current.value)
+      }
+      else if(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)){
+        console.log('Please write a valid email')
+      }
     }
 
     const handleLogin= (e) =>{
@@ -47,7 +55,13 @@ const Login = () => {
                 <div className="card-body">
                   <form className="fieldset" onSubmit={handleLogin}>
                     <label className="label">Email</label>
-                    <input type="email" name='email' className="input" placeholder="Email" />
+                    <input
+                        ref={emailRef}
+                        type="email" 
+                        name='email' 
+                        className="input" 
+                        placeholder="Email" 
+                        />
                     <label className="label">Password</label>
                     <div className='relative border justify-center'>
                                             <input 
