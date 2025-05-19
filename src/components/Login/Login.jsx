@@ -1,4 +1,4 @@
-import { signInWithEmailAndPassword} from 'firebase/auth';
+import { sendPasswordResetEmail, signInWithEmailAndPassword} from 'firebase/auth';
 import auth from "../../firebase/firebase.config"
 import React, { useRef, useState } from 'react'
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
@@ -17,10 +17,17 @@ const Login = () => {
         console.log('Please provide an email', emailRef.current.value);
         return;
       }
-      else if(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)){
+      else if(!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)){
         console.log('Please write a valid email');
         return;
       }
+      sendPasswordResetEmail(auth,email)
+        .then(()=>{
+          alert('please check your email')
+        })
+        .catch(error=>{
+          console.log(error.message)
+        })
     }
 
     const handleLogin= (e) =>{
