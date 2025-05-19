@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword, sendEmailVerification } from 'firebase/auth';
+import { createUserWithEmailAndPassword, sendEmailVerification, updateProfile } from 'firebase/auth';
 import React, { useState } from 'react'
 import auth from '../../firebase/firebase.config';
 import { FaEye, FaEyeSlash } from "react-icons/fa";
@@ -10,6 +10,7 @@ const Register = () => {
   const[showPassword, setShowPassword]= useState(false);
   const handleRegister= (e)=>{
     e.preventDefault();
+    const name= e.target.name.value
     const email = e.target.email.value;
     const password = e.target.password.value;
     const accepted = e.target.terms.checked
@@ -32,6 +33,14 @@ const Register = () => {
     .then(result =>{
       console.log(result.user);
       setSuccess('User Created Successfully...')
+
+      updateProfile(result.user,{
+          displayName: name,photoURL: "https://example.com/jane-q-user/profile.jpg"
+      })
+      .then(()=>console.log('profile updated'))
+      .catch()
+
+
       sendEmailVerification(result.user)
         .then(()=>{
           alert('Please check your email and verify your email')
@@ -81,7 +90,7 @@ const Register = () => {
                     </div>
                     <br />
                     <div className='flex '>
-                      <input type="checkbox" name="terms" id="terms" />
+                      <input type="checkbox" name="terms" id="terms" required />
                       <label htmlFor='terms'>Accept our <a href='#'>Terms and Conditions</a></label>
                     </div>
                     <br />
