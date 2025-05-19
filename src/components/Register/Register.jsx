@@ -55,8 +55,12 @@ const Register = () => {
               <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
                 <div className="card-body">
                   <form className='text-2xl flex flex-col gap-2.5 p-5' onSubmit={handleRegister}>
+                    <label className="label">Name</label>
+                    <input className='p-2 ' type="text" name='namr' placeholder='Enter your name' required id='' />
+
                     <label className="label">Email</label>
-                    <input className='p-2 ' type="email" name='email' id='' />
+                    <input className='p-2 ' type="email" name='email' id=''  required/>
+
                     <label className="label">Password</label>
                     <div className='relative border justify-center'>
                       <input 
@@ -64,6 +68,7 @@ const Register = () => {
                             type={showPassword? "text":"password" }
                             name='password'
                             id='' 
+                            required
                             />
                     <span 
                         onClick={()=>setShowPassword(!showPassword)}
